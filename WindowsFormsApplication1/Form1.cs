@@ -2702,9 +2702,9 @@ namespace WindowsFormsApplication1
                 Thread.Sleep((Convert.ToInt32(Config.UIParameter[10]) * 1000));
                 try
                 {
-                    for(int i=0; i<4;i++)
-                    { 
-                    if (Convert.ToBoolean(Config.UIParameter[8]))
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (Convert.ToBoolean(Config.UIParameter[8]))
                         {
                             if (Config.StorageAlarm)
                             {
@@ -2729,7 +2729,7 @@ namespace WindowsFormsApplication1
                 {
 
                 }
-                
+
             }
         }
         private void trend()
@@ -3587,12 +3587,12 @@ namespace WindowsFormsApplication1
             string columnName = this.dataGridViewChSetting.Columns[e.ColumnIndex].HeaderText;
 
             // Check for the column to validate
-            if (columnName.Equals("Senseivity mv/g") || columnName.Equals("Type"))
+            if (columnName.Equals("Sensitivity mv/g") || columnName.Equals("Type"))
             {
                 // Check if the input is empty
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
                 {
-                    MessageBox.Show("Senseivity or Type could not be empty.");
+                    MessageBox.Show("Sensitivity or Type could not be empty.");
                     e.Cancel = true;
                 }
                 if (columnName.Equals("Type"))
@@ -3604,13 +3604,13 @@ namespace WindowsFormsApplication1
                         e.Cancel = true;
                     }
                 }
-                if (columnName.Equals("Senseivity mv/g"))
+                if (columnName.Equals("Sensitivity mv/g"))
                 {
                     // Check if the input format is correct
                     Regex datePattern = new Regex(@"^[0-9]*[.][0-9]*|^([+]?[0-9]+\d*)$");
                     if (!datePattern.IsMatch(e.FormattedValue.ToString()))
                     {
-                        MessageBox.Show("Senseivity must be a none zero Floating number.");
+                        MessageBox.Show("Sensitivity must be a none zero Floating number.");
                         e.Cancel = true;
                     }
                 }
@@ -3718,15 +3718,18 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Schedule must be a none zero Integer number.");
                 e.Cancel = true;
             }
-            if (Convert.ToInt16(TextBoxNormalSechedule.Text) < 10)
+            else
             {
-                MessageBox.Show(" Schedule must >= 10s .");
-                e.Cancel = true;
-            }
-            if (Convert.ToInt16(TextBoxNormalSechedule.Text) < Convert.ToInt16(TextBoxNormalAverages.Text))
-            {
-                MessageBox.Show("Schedule must >= Average times.");
-                e.Cancel = true;
+                if (Convert.ToInt16(TextBoxNormalSechedule.Text) < 10)
+                {
+                    MessageBox.Show(" Schedule must >= 10s .");
+                    e.Cancel = true;
+                }
+                if (Convert.ToInt16(TextBoxNormalSechedule.Text) < Convert.ToInt16(TextBoxNormalAverages.Text))
+                {
+                    MessageBox.Show("Schedule must >= Average times.");
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -3738,11 +3741,13 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Average times must be a none zero Integer number.");
                 e.Cancel = true;
             }
-            
-            if (Convert.ToInt16(TextBoxNormalSechedule.Text) < Convert.ToInt16(TextBoxNormalAverages.Text))
+            else
             {
-                MessageBox.Show(" Average times must <= Schedule .");
-                e.Cancel = true;
+                if (Convert.ToInt16(TextBoxNormalSechedule.Text) < Convert.ToInt16(TextBoxNormalAverages.Text))
+                {
+                    MessageBox.Show(" Average times must <= Schedule .");
+                    e.Cancel = true;
+                }
             }
         }
         private void TextBoxHDspace_Validating(object sender, CancelEventArgs e)
@@ -3753,10 +3758,13 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("Keep HD Spaces must be a none zero Integer number.");
                 e.Cancel = true;
             }
-            if (Convert.ToInt16(TextBoxHDspace.Text) < 2)
+            else
             {
-                MessageBox.Show(" Keep HD Space must >= 2GB .");
-                e.Cancel = true;
+                if (Convert.ToInt16(TextBoxHDspace.Text) < 2)
+                {
+                    MessageBox.Show(" Keep HD Space must >= 2GB .");
+                    e.Cancel = true;
+                }
             }
         }
         void form2_FormClosed(object sender, FormClosedEventArgs e)
@@ -4144,7 +4152,7 @@ namespace WindowsFormsApplication1
             }
         }
         private void InitialDAQ()
-        {            
+        {
             daqcontrol.result = USBDASK.UD_Release_Card(0);
             daqcontrol.result = USBDASK.UD_Register_Card(USBDASK.USB_2405, 0);
             if (daqcontrol.result < 0)
