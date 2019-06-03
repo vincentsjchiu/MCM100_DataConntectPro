@@ -4165,7 +4165,12 @@ namespace WindowsFormsApplication1
 
             daqcontrol.result = USBDASK.UD_AI_InitialMemoryAllocated(0, out Config.memsizereturn);
             Config.memsizereturn = Config.memsizereturn * 1024;
-            daqcontrol.result = USBDASK.UD_Serial_Number_Read(0, daqcontrol.Read_SN_char);
+            //USBDASK.UD_Custom_Serial_Number_Write(0, Encoding.ASCII.GetBytes("HC23NC1029"));
+            USBDASK.UD_Custom_Serial_Number_Read(0, daqcontrol.Read_SN_char);
+            if (daqcontrol.Read_SN_char.All(singleByte => singleByte == 0))
+            {
+                daqcontrol.result = USBDASK.UD_Serial_Number_Read(0, daqcontrol.Read_SN_char);
+            }
             if (daqcontrol.result != USBDASK.NoError)
             {
                 MessageBox.Show("UD_Serial_Number_Read() Fail, Code:" + daqcontrol.result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
